@@ -13,6 +13,12 @@ between tasks, that you can take over at any time, and that any MCP client can d
 you ──▶ Claude Code ──MCP──▶ cubicle ──▶ a desktop that is already you
 ```
 
+![Cubicle signing into a site with a password and a TOTP code from 1Password](docs/demo.gif)
+
+*Driven through MCP: the form fields come from the accessibility tree, and the
+username, password and live TOTP code are typed straight from 1Password — the model
+never sees any of them.*
+
 ```text
 ┌──────────────────────────────┐
 │ Claude Code / Codex / Cursor │
@@ -60,6 +66,16 @@ log in by hand, and every later task starts already authenticated.
 
 `setup` is separate on purpose — provisioning a fresh sandbox takes longer than the 60s
 that MCP clients allow for a single tool call.
+
+## Does it work?
+
+`bun test` covers the phishing/domain logic. The real proof is the end-to-end login:
+
+```bash
+bun test/e2e-login.ts     # deploys the eval site, signs in via MCP, exits 0 on success
+```
+
+That run is what the GIF above shows.
 
 ## Tools
 
@@ -148,6 +164,7 @@ Things that cost a day each, written down so they don't cost you one:
 - `vmagent/accessibility.py` — runs inside the computer, reads the AT-SPI tree. The only
   Python here; `pyatspi` is the one sane binding. It goes when cua-driver replaces it.
 - `evalsite/` — a local login site with TOTP, for deterministic tests
+- `test/e2e-login.ts` — the full login above, run with `bun test/e2e-login.ts`
 - `DESIGN.md` — decisions, risks, and what the experiments actually showed
 
 Apache-2.0.
