@@ -1,21 +1,37 @@
-# Cubicle
+<div align="center">
 
-Give your coding agent a computer that is already logged in as you.
+<pre>
+   ╔═════════════════════════════╗
+   ║ ▸ computer_page             ║      ┌─┐┬ ┬┌┐ ┬┌─┐┬  ┌─┐
+   ║ ▸ computer_paste            ║      │  │ ││├┴┐││  │  ├┤
+   ║ ▸ ok, key is evs_live_7Q2…  ║      └─┘└─┘└─┘┴└─┘┴─┘└─┘
+   ╚══════════════╤══════════════╝
+  ────────────────┴─────────────────────────────────────────
+   ▌                                                       ▐
+</pre>
 
-Your agent gets stuck on something it cannot do: sign into SharePoint, click through
-a dashboard, copy a value out of a web UI. So you paste a brief into some other
+**A computer for your coding agent. Already logged in as you.**
+
+An MCP server that hands any MCP client a Linux desktop which keeps your sessions
+between tasks, fills passwords from 1Password without the model seeing them, and
+lets you take over whenever you want.
+
+[![license](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![status](https://img.shields.io/badge/status-early-orange)](DESIGN.md)
+[![runtime](https://img.shields.io/badge/runtime-bun-black)](https://bun.sh)
+
+<img src="docs/demo.gif" width="800" alt="Claude Code on the left, the computer it drives on the right">
+
+</div>
+
+Your agent gets stuck on something it cannot do: sign into SharePoint, click through a
+dashboard, copy a value out of a web UI. So you paste a brief into some other
 computer-use product, wait, and paste the answer back. You are the integration.
 
-Cubicle is an MCP server. It hands the agent a Linux desktop that keeps your sessions
-between tasks, that you can take over whenever you want, and that any MCP client can
-drive.
-
-![Claude Code on the left, the computer on the right: the agent signs in and reads a key off the dashboard](docs/demo.gif)
-
-A real run, start to finish. `bun deploy.ts` fails because an API key is missing, the key
+The GIF above is a real run. `bun deploy.ts` fails because an API key is missing, the key
 sits behind a login, and the agent signs in and fetches it without you. The form fields
 come from the accessibility tree rather than from pixels, and the username, password and
-one-time code are typed straight out of 1Password, so the model never sees them.
+one-time code are typed straight out of 1Password.
 
 ## Quickstart
 

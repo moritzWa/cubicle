@@ -9,7 +9,18 @@ await loadEnv()
 
 const [cmd, ...rest] = Bun.argv.slice(2)
 
-const usage = `cubicle doctor                         check the setup
+const LOGO = `
+   ╔═════════════════════════════╗
+   ║ ▸ computer_page             ║      ┌─┐┬ ┬┌┐ ┬┌─┐┬  ┌─┐
+   ║ ▸ computer_paste            ║      │  │ ││├┴┐││  │  ├┤
+   ║ ▸ ok, key is evs_live_7Q2…  ║      └─┘└─┘└─┘┴└─┘┴─┘└─┘
+   ╚══════════════╤══════════════╝
+  ────────────────┴─────────────────────────────────────────
+   ▌                                                       ▐
+`
+
+const usage = `${LOGO}
+cubicle doctor                         check the setup
 cubicle setup                          create + provision a computer, then pause it
 cubicle stash <name> --file <path>     stash a file's contents
 cubicle stash <name> --stdin           stash piped input
