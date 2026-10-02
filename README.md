@@ -10,10 +10,12 @@ Cubicle is an MCP server. It hands the agent a Linux desktop that keeps your ses
 between tasks, that you can take over whenever you want, and that any MCP client can
 drive.
 
-![Cubicle signing into a site with a password and a one-time code from 1Password](docs/demo.gif)
+![Claude Code on the left, the computer on the right: the agent signs in and reads a key off the dashboard](docs/demo.gif)
 
-The form fields above come from the accessibility tree, not from pixels. The username,
-password and TOTP code are typed straight out of 1Password, so the model never sees them.
+A real run, start to finish. `bun deploy.ts` fails because an API key is missing, the key
+sits behind a login, and the agent signs in and fetches it without you. The form fields
+come from the accessibility tree rather than from pixels, and the username, password and
+one-time code are typed straight out of 1Password, so the model never sees them.
 
 ## Quickstart
 
