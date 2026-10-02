@@ -3,6 +3,7 @@
  * Cubicle inner MCP server: gives any MCP client (Claude Code, Codex, our own
  * loop) a persistent, authenticated computer.
  */
+import { loadEnv } from '../src/env'
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
@@ -13,6 +14,8 @@ import { paste } from '../src/paste'
 import { listValues } from '../src/stash'
 import { basename } from 'node:path'
 import type { Vm } from '../src/vm'
+
+await loadEnv()
 
 let vm: Vm | null = null
 

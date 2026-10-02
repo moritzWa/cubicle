@@ -1,8 +1,11 @@
 #!/usr/bin/env bun
 /** cubicle CLI: manage the local value stash. */
+import { loadEnv } from '../src/env'
 import { listValues, removeValue, setValue } from '../src/stash'
 import { setupComputer } from '../src/computer'
 import { checkEnv, formatChecks } from '../src/preflight'
+
+await loadEnv()
 
 const [cmd, ...rest] = Bun.argv.slice(2)
 
