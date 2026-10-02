@@ -7,7 +7,7 @@ export type FieldNode = { role: string; label: string; box: [number, number, num
 const AGENT = '/home/user/accessibility.py'
 
 export async function installAccessibility(vm: Vm) {
-  await vm.sbx.files.write(AGENT, await Bun.file('vmagent/accessibility.py').text())
+  await vm.sbx.files.write(AGENT, await Bun.file(`${import.meta.dir}/../vmagent/accessibility.py`).text())
 }
 
 const call = async <T>(vm: Vm, cmd: 'url' | 'focus' | 'fields', fallback: T): Promise<T> => {
