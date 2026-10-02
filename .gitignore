@@ -1,0 +1,10 @@
+.env
+node_modules/
+*.log
+spike-out/
+spike/.sbx
+spike/.fresh-sbx
+spike/.url
+spike/*.png
+.cubicle/
+spike/
