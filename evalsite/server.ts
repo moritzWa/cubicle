@@ -39,7 +39,14 @@ const OTP = page('Verify - evalsite', 'Two-factor code', `<form method=post acti
 <input name=code placeholder="6-digit code" autocomplete=one-time-code autofocus>
 <button>Verify</button></form>`)
 
-const OK = page('Welcome - evalsite', 'Signed in', '<p id=ok>CUBICLE_LOGIN_OK</p>')
+const API_KEY = 'evs_live_7Q2f9KpR4mXv'
+const OK = page(
+  'Dashboard - evalsite',
+  'Dashboard',
+  `<p id=ok>CUBICLE_LOGIN_OK</p>
+   <p>Your API key:</p>
+   <pre id=key style="background:#f4f4f5;padding:.8rem;border-radius:.4rem">${API_KEY}</pre>`,
+)
 const FAIL = page('Denied - evalsite', 'Wrong credentials', '<p id=fail>DENIED</p><a href=/>back</a>')
 
 const html = (body: string, status = 200) =>
