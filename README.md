@@ -50,8 +50,8 @@ one-time code are typed straight out of 1Password.
         v                                                    +-- accessibility tree
   1Password  +  ~/.cubicle/stash.json                        +-- shell, files
                                                              |
+                                                             |
   your browser  <---- VNC, from computer_takeover -----------+
-  (you drive the same desktop by hand)
 ```
 
 One tool call is one round trip: Claude Code asks the MCP server, the server calls the
@@ -60,6 +60,9 @@ Mac and the sandbox is never exposed; both connections are outbound.
 
 Between calls the computer is paused, RAM and disk, so it stays signed in and costs
 nothing while idle. The first call after a pause resumes it in about a second.
+
+`computer_takeover` hands you a URL for that same desktop, so you can sign in or clear a
+CAPTCHA by hand and let the agent carry on.
 
 Secrets never make the round trip. `computer_paste` resolves a 1Password item or a
 stashed value on your Mac, sends it to the sandbox, types it with `xdotool` and shreds
