@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="387" height="182" viewBox="0 0 387 182" role="img" aria-label="cubicle">
+  <style>
+    .art { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 15px; fill: #57606a; }
+    .mark { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 34px; font-weight: 700; letter-spacing: 1.5px; fill: #1f2328; }
+    @media (prefers-color-scheme: dark) { .art { fill: #8b949e; } .mark { fill: #e6edf3; } }
+  </style>
+  <text class="art" xml:space="preserve">
+    <tspan x="18" y="32" textLength="342.0" lengthAdjust="spacingAndGlyphs">     .-------------------------------.</tspan>
+    <tspan x="18" y="49" textLength="342.0" lengthAdjust="spacingAndGlyphs">     |  &gt; computer_page              |</tspan>
+    <tspan x="18" y="66" textLength="342.0" lengthAdjust="spacingAndGlyphs">     |  &gt; computer_paste             |</tspan>
+    <tspan x="18" y="83" textLength="342.0" lengthAdjust="spacingAndGlyphs">     |  &gt; ok, key is evs_live_7Q2... |</tspan>
+    <tspan x="18" y="100" textLength="342.0" lengthAdjust="spacingAndGlyphs">     '--------------. .--------------'</tspan>
+    <tspan x="18" y="117" textLength="351.0" lengthAdjust="spacingAndGlyphs">    ________________|_|________________</tspan>
+  </text>
+  <text class="mark" x="194" y="172" text-anchor="middle">cubicle</text>
+</svg>
