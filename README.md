@@ -99,7 +99,10 @@ through `xdotool` against the X display, never CDP or automation flags, which ke
 
 ## Does it work
 
-Two checks. A login, end to end, which is the run in the GIF:
+Three benchmarks and a login, **38 of 41 tasks passed**, all of it reproducible from
+this repo.
+
+Start with the login, end to end, which is the run in the GIF:
 
 ```bash
 bun test/e2e-login.ts   # deploys a test site into the computer, signs in, exits 0 on success
@@ -150,11 +153,14 @@ chmod +x through Thunar's Properties dialog. The agent is given every tool excep
 `computer_shell`, so it has to drive the GUI; setup and checking run over the shell
 from the harness, so each task is pass/fail with no judge.
 
-Between them the evals found five real bugs, all fixed: `computer_page` ignored
-div-built UIs, leaked the browser's own toolbar into the page listing, and repeated
-each piece of text once per node down the tree; there was no way to drag; and
-`computer_navigate` slept a fixed three seconds, so slow pages were read half-loaded
-and looked broken.
+The evals paid for themselves: they found five real bugs, all fixed. `computer_page`
+ignored div-built UIs, leaked the browser's own toolbar into the page listing, and
+repeated each piece of text once per node down the tree. There was no way to drag.
+And `computer_navigate` slept a fixed three seconds, so slow pages were read
+half-loaded and reported as down.
+
+The three failures: one Cloudflare challenge, one long multi-step flight booking, and
+one task solved so slowly the time-scaled reward fell to 0.16.
 
 ## What this is not
 
