@@ -9,8 +9,15 @@ between tasks, fills passwords from 1Password without the model seeing them, and
 lets you take over whenever you want.
 
 [![license](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![evals](https://img.shields.io/badge/evals-38%2F41-brightgreen)](#does-it-work)
 [![status](https://img.shields.io/badge/status-early-orange)](DESIGN.md)
 [![runtime](https://img.shields.io/badge/runtime-bun-black)](https://bun.sh)
+
+| benchmark | score | what it covers |
+|---|---|---|
+| [MiniWoB++](#does-it-work) | **22/24** | browser widgets, scored rewards |
+| [WebVoyager](#does-it-work) | **9/10** | live websites, judged on the final screenshot |
+| [desktop](#does-it-work) | **7/7** | files, editor, terminal, archives, LibreOffice |
 
 <img src="docs/demo.gif" width="800" alt="Claude Code on the left, the computer it drives on the right">
 
