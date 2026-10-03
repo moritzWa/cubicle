@@ -28,5 +28,23 @@ export const chromeOnBus = async (vm: Vm) =>
 export const focusedElement = (vm: Vm) => call<Focus>(vm, 'focus', {})
 export const pageFields = (vm: Vm) => call<FieldNode[]>(vm, 'fields', [])
 
+/**
+ * Wait for a page to stop changing. A fixed sleep is the wrong tool: slow sites
+ * get read half-loaded and the agent concludes the page never came up.
+ */
+export async function waitForPage(vm: Vm, timeoutMs = 20_000) {
+  const deadline = Date.now() + timeoutMs
+  let last = -1
+  let stable = 0
+  while (Date.now() < deadline) {
+    const n = (await pageFields(vm)).length
+    stable = n > 2 && n === last ? stable + 1 : 0
+    if (stable >= 1) break
+    last = n
+    await Bun.sleep(1000)
+  }
+  return { url: await currentUrl(vm), nodes: last }
+}
+
 /** Chrome reports the address bar without a scheme; make it a URL again. */
 export const normalizeUrl = (u: string) => (u && !/^[a-z]+:\/\//i.test(u) ? `https://${u}` : u)

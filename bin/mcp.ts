@@ -9,7 +9,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod'
 import { getComputer, IdlePauser, takeoverUrl } from '../src/computer'
 import { requireReady } from '../src/preflight'
-import { currentUrl, focusedElement, pageFields } from '../src/accessibility'
+import { currentUrl, focusedElement, pageFields, waitForPage } from '../src/accessibility'
 import { paste } from '../src/paste'
 import { listValues } from '../src/stash'
 import { basename } from 'node:path'
@@ -145,8 +145,11 @@ server.registerTool(
     await c.key('ctrl+l')
     await c.type(url)
     await c.key('Return')
-    await Bun.sleep(3000)
-    return text(`navigated to ${await currentUrl(c)}`)
+    const { url: landed, nodes } = await waitForPage(c)
+    return text(
+      `navigated to ${landed || url} (${nodes} elements)` +
+        (nodes <= 2 ? '. The page looks empty: it may still be loading, or it may be a block page - take a screenshot.' : ''),
+    )
   },
 )
 

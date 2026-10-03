@@ -10,3 +10,6 @@ spike/*.png
 spike/
 evals/results.json
 evals/fixtures/.env
+evals/data/
+evals/shots/
+evals/webvoyager-results.json

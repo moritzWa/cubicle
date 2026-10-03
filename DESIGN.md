@@ -240,3 +240,19 @@ What it caught, all now fixed:
 
 Also worth knowing: the MCP server pauses the computer when its client exits, so
 anything that connects afterwards has to resume it first.
+
+
+## WebVoyager eval (2026-10-03)
+
+`evals/webvoyager.ts` runs tasks from the WebVoyager set against the real web, graded
+by a second Claude call that reads the agent's answer and the final screenshot. 9/10.
+
+- **Fixed: `computer_navigate` slept a fixed 3s.** arXiv's search page is slower than
+  that, so the agent read it half-loaded, retried three times and reported the site as
+  down. It now polls until the element count stops changing (20s cap), returns that
+  count, and says so explicitly when a page comes back nearly empty, which usually
+  means a block page rather than a loading failure.
+- **Not fixed, and not fixable here: Cloudflare.** Cambridge Dictionary serves a
+  challenge to the sandbox. Human takeover is the answer; the session then persists.
+- Bot detection is uneven: Google, GitHub, Apple, ESPN, BBC, Hugging Face, Coursera,
+  arXiv and Wolfram Alpha all behaved normally from an E2B datacenter IP.

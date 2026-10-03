@@ -122,10 +122,26 @@ needed for most of them:
 | passed | click-button 0.97, enter-text 0.96, click-checkboxes 0.96, click-tab-2 0.96, login-user 0.96, use-autocomplete 0.96, click-dialog-2 0.97, simple-algebra 0.96, click-pie 0.96, drag-items 0.96, copy-paste 0.96, count-shape 0.96, use-slider 0.95, tic-tac-toe 0.95, scroll-text 0.94, click-collapsible-2 0.90, enter-date 0.86, click-shades 0.67, choose-date-easy 0.63, terminal 0.58, search-engine 0.55, guess-number 0.27 |
 | failed | book-flight (long multi-step booking; hard for every agent), email-inbox-forward-nl (solved, but reward 0.16 after the time penalty) |
 
-Rewards are time-scaled, so a low score means slow rather than wrong. The eval found
-four real bugs, all fixed: `computer_page` ignored div-built UIs, it leaked the
-browser's own toolbar into the page listing, it repeated each piece of text once per
-node down the tree, and there was no way to drag.
+Rewards are time-scaled, so a low score means slow rather than wrong.
+
+And [WebVoyager](https://github.com/MinorJerry/WebVoyager), the same thing on live
+websites, where a second Claude call grades the answer against the final screenshot:
+
+```bash
+bun evals/webvoyager.ts
+bun evals/webvoyager.ts "GitHub--0,ESPN--0"
+```
+
+**9 of 10 passed**: arXiv, Wolfram Alpha, Hugging Face, GitHub, BBC News, Apple, ESPN,
+Google Search, Coursera. The failure is Cambridge Dictionary, which serves a Cloudflare
+challenge. That is what `computer_takeover` is for: solve it once by hand and the
+session persists.
+
+Between them the evals found five real bugs, all fixed: `computer_page` ignored
+div-built UIs, leaked the browser's own toolbar into the page listing, and repeated
+each piece of text once per node down the tree; there was no way to drag; and
+`computer_navigate` slept a fixed three seconds, so slow pages were read half-loaded
+and looked broken.
 
 ## What this is not
 
