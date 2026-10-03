@@ -13,3 +13,4 @@ evals/fixtures/.env
 evals/data/
 evals/shots/
 evals/webvoyager-results.json
+evals/desktop-results.json

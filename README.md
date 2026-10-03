@@ -54,9 +54,9 @@ Setup is a separate command because provisioning a fresh sandbox takes longer th
 | `computer_page` | the URL plus every interactive element with its screen coordinates, read from the accessibility tree |
 | `computer_screenshot` | 1024x768 PNG |
 | `computer_click`, `computer_type`, `computer_key` | OS-level input, so pages see a real user |
-| `computer_drag` | press, move, release: drag-and-drop, sliders, selecting text |
 | `computer_navigate` | open a URL |
 | `computer_shell` | run a command in the computer |
+| `computer_drag` | press, move, release: drag-and-drop, sliders, selecting text |
 | `computer_paste` | type a secret into the focused field without the model seeing it |
 | `computer_stash_list` | names of locally stashed values, never the values |
 | `computer_upload_file`, `computer_download_file` | move files between your Mac and the computer |
@@ -136,6 +136,19 @@ bun evals/webvoyager.ts "GitHub--0,ESPN--0"
 Google Search, Coursera. The failure is Cambridge Dictionary, which serves a Cloudflare
 challenge. That is what `computer_takeover` is for: solve it once by hand and the
 session persists.
+
+And a desktop set, because none of the above leaves the browser:
+
+```bash
+bun evals/desktop.ts
+```
+
+**7 of 7 passed**: create a folder and rename a file in Thunar, type and save in
+Mousepad, open the Terminal app and make a file with it, extract a zip with the
+graphical archive manager, build a sum in LibreOffice Calc and save it as CSV, and
+chmod +x through Thunar's Properties dialog. The agent is given every tool except
+`computer_shell`, so it has to drive the GUI; setup and checking run over the shell
+from the harness, so each task is pass/fail with no judge.
 
 Between them the evals found five real bugs, all fixed: `computer_page` ignored
 div-built UIs, leaked the browser's own toolbar into the page listing, and repeated

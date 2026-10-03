@@ -256,3 +256,15 @@ by a second Claude call that reads the agent's answer and the final screenshot. 
   challenge to the sandbox. Human takeover is the answer; the session then persists.
 - Bot detection is uneven: Google, GitHub, Apple, ESPN, BBC, Hugging Face, Coursera,
   arXiv and Wolfram Alpha all behaved normally from an E2B datacenter IP.
+
+
+## Desktop eval (2026-10-03)
+
+`evals/desktop.ts`: seven GUI tasks with no browser, verified over the shell, with
+`computer_shell` withheld from the agent so it has to use the interface. 7/7.
+
+Thunar (create folder, rename, chmod via Properties), Mousepad (type and save),
+the Terminal app, xarchiver (extract a zip), LibreOffice Calc (enter a formula, save
+as CSV, keep format). Nothing in the product needed changing for these; the one
+failure in the first run was my own fixture, since the image ships `unzip` but not
+`zip`.
