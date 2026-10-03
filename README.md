@@ -32,6 +32,39 @@ sits behind a login, and the agent signs in and fetches it without you. The form
 come from the accessibility tree rather than from pixels, and the username, password and
 one-time code are typed straight out of 1Password.
 
+## How it fits together
+
+```text
+  your Mac                                    the cloud
+  ----------------------------------------    ------------------------------------
+
+  Claude Code / Codex / Cursor
+        |
+        |  MCP over stdio
+        |  computer_page, computer_click, computer_paste, ...
+        v
+  cubicle MCP server  ------- E2B SDK over https ------->  your computer
+        |                                                  (Ubuntu + Xfce)
+        |  reads on demand, never                            |
+        |  returns a value to the model                      |-- Chrome, signed in
+        v                                                    |-- accessibility tree
+  1Password  +  ~/.cubicle/stash.json                        |-- shell, files
+                                                             |
+  your browser  <---- VNC, from computer_takeover ---------- |
+  (you drive the same desktop by hand)
+```
+
+One tool call is one round trip: Claude Code asks the MCP server, the server calls the
+sandbox over HTTPS, the sandbox acts on the desktop and answers. Nothing listens on your
+Mac and the sandbox is never exposed; both connections are outbound.
+
+Between calls the computer is paused, RAM and disk, so it stays signed in and costs
+nothing while idle. The first call after a pause resumes it in about a second.
+
+Secrets never make the round trip. `computer_paste` resolves a 1Password item or a
+stashed value on your Mac, sends it to the sandbox, types it with `xdotool` and shreds
+it. The model sees `{status: "pasted", chars: 20}`.
+
 ## Quickstart
 
 ```bash
