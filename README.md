@@ -35,22 +35,22 @@ one-time code are typed straight out of 1Password.
 ## How it fits together
 
 ```text
-  your Mac                                    the cloud
-  ----------------------------------------    ------------------------------------
+  your Mac                                     the cloud
+  -----------------------------------------    -----------------------------------
 
   Claude Code / Codex / Cursor
         |
         |  MCP over stdio
         |  computer_page, computer_click, computer_paste, ...
         v
-  cubicle MCP server  ------- E2B SDK over https ------->  your computer
-        |                                                  (Ubuntu + Xfce)
-        |  reads on demand, never                            |
-        |  returns a value to the model                      |-- Chrome, signed in
-        v                                                    |-- accessibility tree
-  1Password  +  ~/.cubicle/stash.json                        |-- shell, files
+  cubicle MCP server  ----- E2B SDK over https ----->  your computer
+        |                                              (Ubuntu + Xfce)
+        |  read on demand, never                             |
+        |  returned to the model                             +-- Chrome, signed in
+        v                                                    +-- accessibility tree
+  1Password  +  ~/.cubicle/stash.json                        +-- shell, files
                                                              |
-  your browser  <---- VNC, from computer_takeover ---------- |
+  your browser  <---- VNC, from computer_takeover -----------+
   (you drive the same desktop by hand)
 ```
 
