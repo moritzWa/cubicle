@@ -10,14 +10,14 @@ await loadEnv()
 const [cmd, ...rest] = Bun.argv.slice(2)
 
 const LOGO = String.raw`
-     .-------------------------------.
-     |  > computer_page              |
-     |  > computer_paste             |
-     |  > ok, key is evs_live_7Q2... |
-     '--------------. .--------------'
-    ________________|_|________________
+ .-------------------------------.
+ |  > computer_page              |
+ |  > computer_paste             |
+ |  > ok, key is evs_live_7Q2... |
+ '--------------. .--------------'
+________________|_|________________
 
-            c u b i c l e
+           c u b i c l e
 `
 
 const usage = `${LOGO}
