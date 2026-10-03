@@ -88,6 +88,21 @@ server.registerTool(
 )
 
 server.registerTool(
+  'computer_drag',
+  {
+    title: 'Drag',
+    description:
+      'Press the mouse at one point, move to another, release. Use for drag-and-drop, sliders, resize handles, and selecting text.',
+    inputSchema: { fromX: z.number(), fromY: z.number(), toX: z.number(), toY: z.number() },
+  },
+  async ({ fromX, fromY, toX, toY }) => {
+    const c = await computer()
+    await c.drag(fromX, fromY, toX, toY)
+    return text(`dragged ${fromX},${fromY} -> ${toX},${toY}`)
+  },
+)
+
+server.registerTool(
   'computer_type',
   {
     title: 'Type',

@@ -212,3 +212,31 @@ isn't installed on this Mac, so `e2b template build` can't run. Provisioning at 
 Sandbox ids live in `spike/.sbx` (untracked). **Never commit one**: the VNC URL
 `https://6080-<id>.e2b.app/vnc.html` is public with no auth, so the id alone grants
 full control of a logged-in desktop.
+
+
+## MiniWoB++ eval (2026-10-02)
+
+`evals/miniwob.ts` runs the benchmark through Claude Code and the MCP tools, scored by
+the reward MiniWoB prints on the page. 22/24 passed, median 46s.
+
+What it caught, all now fixed:
+
+- **`computer_page` only reported semantic HTML** (button, link, entry, heading,
+  paragraph). Pages built out of divs surface as `section`/`static`, so MiniWoB looked
+  like a blank page. Now any node with visible text is reported, and anything with a
+  real action on the AT-SPI action interface is marked clickable regardless of role.
+- **The browser's own UI leaked into the page listing.** Scoped to the tab's document,
+  chosen as the largest web document in the tree.
+- **Each piece of text appeared several times**, once per node down the tree: a
+  paragraph, then one `static` per run of markup. book-flight's instruction arrived as
+  10 fragments. Child text contained in the parent's is dropped.
+- **No drag.** `computer_drag` presses, moves in 24 steps, releases. Stepping matters:
+  anything listening for `mousemove` ignores a jump straight from press to release.
+  Three failures became passes.
+- **A second client restarted Chrome.** `ensureChrome` treated an empty URL as "Chrome
+  is broken", but `about:blank` and a mid-load page read the same way, so connecting a
+  second client threw away the first one's page. It now only restarts when Chrome is
+  absent from the accessibility bus.
+
+Also worth knowing: the MCP server pauses the computer when its client exits, so
+anything that connects afterwards has to resume it first.

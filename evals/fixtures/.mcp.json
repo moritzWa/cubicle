@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "cubicle": {
+      "command": "bun",
+      "args": ["../../bin/mcp.ts"],
+      "env": {}
+    }
+  }
+}

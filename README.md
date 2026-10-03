@@ -54,6 +54,7 @@ Setup is a separate command because provisioning a fresh sandbox takes longer th
 | `computer_page` | the URL plus every interactive element with its screen coordinates, read from the accessibility tree |
 | `computer_screenshot` | 1024x768 PNG |
 | `computer_click`, `computer_type`, `computer_key` | OS-level input, so pages see a real user |
+| `computer_drag` | press, move, release: drag-and-drop, sliders, selecting text |
 | `computer_navigate` | open a URL |
 | `computer_shell` | run a command in the computer |
 | `computer_paste` | type a secret into the focused field without the model seeing it |
@@ -98,13 +99,33 @@ through `xdotool` against the X display, never CDP or automation flags, which ke
 
 ## Does it work
 
-`bun test` covers the domain matching. The end-to-end proof is a login:
+Two checks. A login, end to end, which is the run in the GIF:
 
 ```bash
 bun test/e2e-login.ts   # deploys a test site into the computer, signs in, exits 0 on success
 ```
 
-That is the run in the GIF.
+And [MiniWoB++](https://github.com/Farama-Foundation/miniwob-plusplus), 130 browser
+tasks with scored rewards, driven by Claude Code through these tools and nothing else:
+
+```bash
+bun evals/setup-miniwob.ts    # once: clone the tasks into the computer, serve them
+bun evals/miniwob.ts          # 24 tasks, about 20 minutes
+bun evals/miniwob.ts click-pie,terminal,drag-items
+```
+
+**22 of 24 passed**, median 46 seconds per task, on Claude Opus 5 with no screenshots
+needed for most of them:
+
+| | |
+|---|---|
+| passed | click-button 0.97, enter-text 0.96, click-checkboxes 0.96, click-tab-2 0.96, login-user 0.96, use-autocomplete 0.96, click-dialog-2 0.97, simple-algebra 0.96, click-pie 0.96, drag-items 0.96, copy-paste 0.96, count-shape 0.96, use-slider 0.95, tic-tac-toe 0.95, scroll-text 0.94, click-collapsible-2 0.90, enter-date 0.86, click-shades 0.67, choose-date-easy 0.63, terminal 0.58, search-engine 0.55, guess-number 0.27 |
+| failed | book-flight (long multi-step booking; hard for every agent), email-inbox-forward-nl (solved, but reward 0.16 after the time penalty) |
+
+Rewards are time-scaled, so a low score means slow rather than wrong. The eval found
+four real bugs, all fixed: `computer_page` ignored div-built UIs, it leaked the
+browser's own toolbar into the page listing, it repeated each piece of text once per
+node down the tree, and there was no way to drag.
 
 ## What this is not
 

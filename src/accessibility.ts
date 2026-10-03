@@ -10,7 +10,7 @@ export async function installAccessibility(vm: Vm) {
   await vm.sbx.files.write(AGENT, await Bun.file(`${import.meta.dir}/../vmagent/accessibility.py`).text())
 }
 
-const call = async <T>(vm: Vm, cmd: 'url' | 'focus' | 'fields', fallback: T): Promise<T> => {
+const call = async <T>(vm: Vm, cmd: 'url' | 'focus' | 'fields' | 'present', fallback: T): Promise<T> => {
   const out = await vm.x(`python3 ${AGENT} ${cmd}`, 90_000)
   try {
     return JSON.parse(out) as T
@@ -21,6 +21,10 @@ const call = async <T>(vm: Vm, cmd: 'url' | 'focus' | 'fields', fallback: T): Pr
 
 /** URL of the focused tab, read from Chrome's address bar node. */
 export const currentUrl = (vm: Vm) => call<string>(vm, 'url', '')
+/** Is Chrome published on the accessibility bus? Empty URL is not the same thing:
+ *  about:blank and a mid-load page both report no URL. */
+export const chromeOnBus = async (vm: Vm) =>
+  (await call<{ chrome: boolean }>(vm, 'present', { chrome: false })).chrome
 export const focusedElement = (vm: Vm) => call<Focus>(vm, 'focus', {})
 export const pageFields = (vm: Vm) => call<FieldNode[]>(vm, 'fields', [])
 

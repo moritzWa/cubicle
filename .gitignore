@@ -8,3 +8,5 @@ spike/.url
 spike/*.png
 .cubicle/
 spike/
+evals/results.json
+evals/fixtures/.env

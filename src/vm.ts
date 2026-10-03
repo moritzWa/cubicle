@@ -38,6 +38,21 @@ export class Vm {
     await this.sh(`shred -u ${path} 2>/dev/null || rm -f ${path}`)
   }
 
+  /** Press at one point, move in steps, release at another. Steps matter: apps
+   *  that listen for mousemove ignore a jump from press straight to release. */
+  async drag(x1: number, y1: number, x2: number, y2: number, steps = 24) {
+    const moves: string[] = []
+    for (let i = 1; i <= steps; i++) {
+      moves.push(
+        `mousemove ${Math.round(x1 + ((x2 - x1) * i) / steps)} ${Math.round(y1 + ((y2 - y1) * i) / steps)} sleep 0.02`,
+      )
+    }
+    return this.x(
+      `xdotool mousemove ${x1} ${y1} sleep 0.1 mousedown 1 sleep 0.1 ${moves.join(' ')} sleep 0.1 mouseup 1`,
+      60_000,
+    )
+  }
+
   screenshot = () => this.sbx.screenshot()
 
   async saveShot(file: string) {

@@ -2,7 +2,7 @@
 import { Sandbox } from '@e2b/desktop'
 import { Vm } from './vm'
 import { provision, launchChrome, streamUrl } from './provision'
-import { currentUrl } from './accessibility'
+import { chromeOnBus } from './accessibility'
 
 const STATE = `${process.env.HOME}/.cubicle/computer.json`
 
@@ -54,7 +54,13 @@ export async function getComputer(timeoutMs = 10 * 60_000): Promise<Vm> {
  */
 async function ensureChrome(vm: Vm) {
   await launchChrome(vm, 'about:blank')
-  if (await currentUrl(vm)) return
+  // Only restart when Chrome is genuinely missing from the accessibility bus.
+  // Checking the URL instead would restart on about:blank or a mid-load page,
+  // which throws away whatever another client was doing.
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (await chromeOnBus(vm)) return
+    await Bun.sleep(1500)
+  }
   await vm.sh('pkill -x chrome; sleep 2; true')
   await launchChrome(vm, 'about:blank')
 }
